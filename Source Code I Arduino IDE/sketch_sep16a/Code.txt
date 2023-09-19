@@ -1,0 +1,118 @@
+/*
+                                       
+                                                                              IT project
+                   Developed by Aya Gamal, Mohammed Hassan, Khaled Rokaya, Daila Torky
+
+
+ */
+
+ // Define sensor and buzzer pins
+
+    int echo1 = 9;
+    int trig1 = 10;
+    int echo2 = 11;
+    int trig2 = 12;
+    int buz_pin1 = 3;
+    int buz_pin2 = 6;
+
+// Variables for sensor data
+
+    float duration1, duration2;
+    int distance1, distance2;
+
+void setup() {
+
+
+                             /* Setup for Sensor 1 */
+
+            pinMode(trig1, OUTPUT);       // Set trigger pin as output
+            pinMode(echo1, INPUT);        // Set echo pin as input
+
+                            /* Setup for Sensor 2 */
+
+            pinMode(trig2, OUTPUT);       // Set trigger pin as output
+            pinMode(echo2, INPUT);        // Set echo pin as input
+
+            Serial.begin(9600);           // Initialize serial communication
+
+                            /* Setup for Buzzer 1 */
+ 
+            pinMode(buz_pin1, OUTPUT);    // Set buzzer 1 pin as output
+            analogWrite(buz_pin1, 150);   // Set buzzer 1 initial intensity
+            digitalWrite(buz_pin1, LOW);  // Turn off buzzer 1 initially
+
+                               /* Set buzzer 2 */
+
+            pinMode(buz_pin2, OUTPUT);    // Set buzzer 2 pin as output
+            analogWrite(buz_pin2, 150);   // Set buzzer 2 initial intensity
+            digitalWrite(buz_pin2, LOW);  // Turn off buzzer 2 initially
+
+
+}
+
+void loop() {
+   
+                       /* Sensor 1: Distance Measurement */
+
+
+            digitalWrite(trig1, HIGH); 
+            delayMicroseconds(10);            
+            digitalWrite(trig1, LOW);
+            duration1 = pulseIn(echo1, HIGH);        // Measure echo time
+            distance1 = (duration1 * 0.0343) / 2.0;  // Calculate distance
+
+ 
+                      /* Sensor 2: Distance Measurement */
+
+
+            digitalWrite(trig2, HIGH);
+            delayMicroseconds(10);
+            digitalWrite(trig2, LOW);
+            duration2 = pulseIn(echo2, HIGH);        // Measure echo time
+            distance2 = (duration2 * 0.0343) / 2.0;  // Calculate distance
+
+
+
+                      /* Buzzer 1: Alert Based on Distance */
+
+
+        if (distance1 < 100) { // Check if the distance is less than 100 cm
+
+          int freq1 = map(distance1, 2, 99, 2800, 2500);  // Map distance to tone frequency
+          tone(buz_pin1, freq1);
+
+          int delay1 = map(distance1, 2, 99, 20, 100);    // Map distance to delay time
+          delay(delay1);
+
+          noTone(buz_pin1);   // Turn off buzzer
+          delay(delay1);
+        } 
+        
+        else {
+          noTone(buz_pin1);  // Turn off buzzer if distance is greater than or equal to 100 cm
+        }
+
+
+                       /* Buzzer 2: Alert Based on Distance */
+
+        if (distance2 < 100) {   // Check if the distance is less than 100 cm
+
+          int freq2 = map(distance2, 2, 99, 2800, 2500);  // Map distance to tone frequency
+          tone(buz_pin2, freq2);
+
+          int delay2 = map(distance2, 2, 99, 20, 100);  // Map distance to delay time
+          delay(delay2);
+
+          noTone(buz_pin2);  // Turn off buzzer
+          delay(delay2);
+        } 
+        
+        else {
+          noTone(buz_pin2);  // Turn off buzzer if distance is greater than or equal to 100 cm
+        }
+}
+/*
+
+        Glasses for blind people
+ 
+ */
