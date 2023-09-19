@@ -2,7 +2,7 @@
 
 ## Blind mobility glasses alert users to obstacles within 1 meter using body sensing
 
-### This project have 4 parts : 
+### This project has 4 parts : 
 1. Software 
 2. Simulation
 3. Hardware 
