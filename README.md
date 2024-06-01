@@ -6,7 +6,7 @@
 1. Software 
 2. Simulation
 3. Hardware 
-4. Real-Teasting 
+4. Real-Testing 
 
 * Coding with Arduino IDE for software development.
 * Simulating the idea using Tinkercad for testing and refinement.
